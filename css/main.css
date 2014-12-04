@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Ubuntu', 'Helvetica Neue', 'Helvetica', sans-serif;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .product-picture {
@@ -10,4 +10,6 @@ body {
     height: 130px;
     margin-right: 10px;
 }
+
+
 
