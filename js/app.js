@@ -36,16 +36,20 @@ angular.module('CommentApp', ['ui.bootstrap'])
 
         $scope.refreshComments();
 
-        $scope.newComment = {score: 0};
+        $scope.newComment = {
+            score: 0
+        };
 
         $scope.addComment = function() {
             $scope.loading = true;
             $http.post(commentsUrl, $scope.newComment)
                 .success(function(responseData) {
-                    $scope.refreshComments()
+                    $scope.refreshComments();
                     $scope.newComment.objectId = responseData.objectId;
                     $scope.comments.push($scope.newComment);
-                    $scope.newComment = {score: 0};
+                    $scope.newComment = {
+                        score: 0
+                    };
                 })
                 .error(function(err) {
                     console.log(err);
