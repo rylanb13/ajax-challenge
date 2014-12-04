@@ -36,27 +36,35 @@ angular.module('CommentApp', ['ui.bootstrap'])
 
         $scope.refreshComments();
 
-        $scope.newComment = {
-            score: 0
-        };
+        $scope.newComment = {score: 0};
 
         $scope.addComment = function() {
-            $scope.loading = true;
+            $scope.inserting = true;
             $http.post(commentsUrl, $scope.newComment)
                 .success(function(responseData) {
                     $scope.refreshComments();
                     $scope.newComment.objectId = responseData.objectId;
                     $scope.comments.push($scope.newComment);
-                    $scope.newComment = {
-                        score: 0
-                    };
+                    $scope.newComment = {score: 0};
                 })
                 .error(function(err) {
                     console.log(err);
                 })
                 .finally(function() {
-                    $scope.loading = false;
+                    $scope.inserting = false;
                 });
+        };
+
+        $scope.deleteComment = function(comment) {
+            $scope.loading = true;
+            $http.delete(commentsUrl + '/' + comment.objectId)
+                .success(function(data) {
+                    $scope.refreshComments();
+                    $scope.loading = false;
+                })
+                .error(function(err) {
+                   console.log(err);
+                })
         };
 
         $scope.incrementScore = function(comment, amount) {
@@ -72,18 +80,6 @@ angular.module('CommentApp', ['ui.bootstrap'])
                     })
                     .error(function (err) {
                         console.log(err);
-                    })
-            }
-
-            $scope.deleteComment = function(comment) {
-                $scope.loading = true;
-                $http.delete(commentsUrl + '/' + comment.objectId)
-                    .success(function(data) {
-                        $scope.refreshComments();
-                        $scope.loading = false;
-                    })
-                    .error(function(err) {
-                       console.log(err);
                     })
             }
         };
